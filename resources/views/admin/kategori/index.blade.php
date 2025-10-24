@@ -1,55 +1,76 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-    <div class="flex justify-between mb-4">
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Daftar Kategori</h2>
+<div class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-lg">
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Daftar Kategori</h2>
         <a href="{{ route('kategori.create') }}"
-           class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Tambah</a>
+           class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition duration-150">
+            Tambah Kategori
+        </a>
     </div>
 
+    {{-- Alert sukses --}}
     @if (session('success'))
-    <div class="mb-4 flex items-center justify-between p-4 rounded-lg border border-green-500 bg-green-600/90 text-white shadow-md transition-all">
-        <div class="flex items-center space-x-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span class="font-medium">{{ session('success') }}</span>
+        <div class="mb-4 flex items-center justify-between p-4 rounded-lg border border-green-500 bg-green-600/90 text-white shadow-md transition-all">
+            <div class="flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="font-medium">{{ session('success') }}</span>
+            </div>
+            <button type="button" onclick="this.parentElement.remove()" class="text-white text-xl leading-none">&times;</button>
         </div>
-        <button type="button" onclick="this.parentElement.remove()" class="text-white text-xl leading-none">&times;</button>
-    </div>
     @endif
 
-    <table class="min-w-full text-sm text-left text-gray-500">
-        <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-400">
-            <tr>
-                <th class="px-4 py-3">No</th>
-                <th class="px-4 py-3">Nama Kategori</th>
-                <th class="px-4 py-3 text-right">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($kategoris as $kategori)
-                <tr class="border-b dark:border-gray-700">
-                    <td class="px-4 py-3">{{ $loop->iteration }}</td>
-                    <td class="px-4 py-3">{{ $kategori->nama }}</td>
-                    <td class="px-4 py-3 text-right">
-                        <a href="{{ route('kategori.edit', $kategori->id) }}"
-                           class="text-blue-600 hover:underline mr-2">Edit</a>
-                        <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:underline"
-                                    onclick="return confirm('Hapus kategori ini?')">Hapus</button>
-                        </form>
-                    </td>
+    {{-- Tabel kategori --}}
+    <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
+        <table class="min-w-full text-sm text-left text-gray-700 dark:text-gray-100">
+            <thead class="bg-gray-200 dark:bg-gray-800 uppercase text-xs font-semibold tracking-wide">
+                <tr>
+                    <th class="px-4 py-3">#</th>
+                    <th class="px-4 py-3">Nama Kategori</th>
+                    <th class="px-4 py-3 text-center">Aksi</th>
                 </tr>
-            @empty
-                <tr><td colspan="3" class="text-center py-4">Belum ada data.</td></tr>
-            @endforelse
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @forelse ($kategoris as $index => $kategori)
+                    <tr class="border-b border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                        <td class="px-4 py-3">{{ $index + 1 }}</td>
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $kategori->nama }}</td>
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex justify-center items-center space-x-2">
+                                {{-- Tombol Edit --}}
+                                <a href="{{ route('kategori.edit', $kategori->id) }}"
+                                   class="px-3 py-1 text-xs font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md shadow transition duration-150">
+                                    Edit
+                                </a>
 
+                                {{-- Tombol Hapus --}}
+                                <form action="{{ route('kategori.destroy', $kategori->id) }}" method="POST"
+                                      onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="px-3 py-1 text-xs font-medium text-white bg-red-600 hover:bg-red-700 rounded-md shadow transition duration-150">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="px-4 py-4 text-center text-gray-500 dark:text-gray-300 italic">
+                            Belum ada kategori yang ditambahkan.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    {{-- Pagination --}}
     <div class="mt-4">
         {{ $kategoris->links() }}
     </div>

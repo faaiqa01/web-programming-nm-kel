@@ -5,11 +5,12 @@
             <!-- Left Section -->
             <div class="flex items-center space-x-8">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-200" />
-                    </a>
-                </div>
+        <div class="shrink-0 flex items-center">
+            <a href="{{ route('dashboard') }}" class="flex items-center space-x-2">
+                <span class="text-2xl font-bold text-blue-600 dark:text-blue-400">📚</span>
+                <span class="text-xl font-semibold text-gray-800 dark:text-gray-100">E-Library</span>
+            </a>
+        </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden sm:flex sm:space-x-6">
@@ -45,12 +46,14 @@
                     @endif
                 </div>
             </div>
-
             <!-- Right Section (User Dropdown) -->
             <div class="hidden sm:flex sm:items-center">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-300 bg-transparent hover:text-white transition">
+                        <button class="inline-flex items-center px-3 py-2 text-sm font-medium 
+                            text-gray-800 dark:text-gray-300 
+                            bg-transparent hover:text-gray-900 dark:hover:text-white 
+                            transition">
                             <div>{{ Auth::user()->name }}</div>
                             <svg class="ml-1 w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -74,6 +77,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+
 
             <!-- Mobile Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
