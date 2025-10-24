@@ -11,26 +11,16 @@
     </div>
 
     @if (session('success'))
-    <div id="alert-success" 
-        class="mb-4 flex items-center justify-between gap-3 px-5 py-3 rounded-xl 
-               bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg 
-               animate-fade-in-down transition duration-300">
-
-        <div class="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 stroke-width="2" stroke="currentColor" class="w-6 h-6 text-white">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <div class="mb-4 flex items-center justify-between p-4 rounded-lg border border-green-500 bg-green-600/90 text-white shadow-md transition-all">
+        <div class="flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
             </svg>
-            <span class="text-base font-semibold">{{ session('success') }}</span>
+            <span class="font-medium">{{ session('success') }}</span>
         </div>
-
-        <button onclick="document.getElementById('alert-success').remove()"
-                class="text-white/80 hover:text-white text-2xl leading-none transition">
-            &times;
-        </button>
+        <button type="button" onclick="this.parentElement.remove()" class="text-white text-xl leading-none">&times;</button>
     </div>
-@endif
+    @endif
 
 
 
