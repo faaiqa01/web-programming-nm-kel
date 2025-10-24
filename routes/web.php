@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('peminjaman', PeminjamanController::class)->except(['create', 'edit']);
     Route::post('peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])->name('peminjaman.updateStatus');
+    Route::get('/riwayat', [App\Http\Controllers\PeminjamanController::class, 'riwayat'])->name('peminjaman.riwayat')->middleware('auth');
 });
 
 require __DIR__.'/auth.php';

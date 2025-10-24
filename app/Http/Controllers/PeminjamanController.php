@@ -57,4 +57,13 @@ class PeminjamanController extends Controller
         Peminjaman::destroy($id);
         return back()->with('success', 'Data peminjaman dihapus.');
     }
+    public function riwayat()
+    {
+        $peminjamans = \App\Models\Peminjaman::with('buku')
+            ->where('user_id', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('member.riwayat', compact('peminjamans'));
+    }
 }
