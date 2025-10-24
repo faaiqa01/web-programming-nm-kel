@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PeminjamanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,6 +24,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('kategori', KategoriController::class);
     Route::resource('buku', BukuController::class);
     Route::resource('user', UserController::class); 
+
+    Route::resource('peminjaman', PeminjamanController::class)->except(['create', 'edit']);
+    Route::post('peminjaman/{id}/status', [PeminjamanController::class, 'updateStatus'])->name('peminjaman.updateStatus');
 });
 
 require __DIR__.'/auth.php';
