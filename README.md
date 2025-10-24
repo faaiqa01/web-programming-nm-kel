@@ -73,6 +73,7 @@ Untuk menambah anggota, login sebagai admin dan gunakan menu **User**. Semua aku
 - `php artisan migrate:fresh --seed`: reset database ketika pengembangan.
 - `php artisan test`: menjalankan test suite (tambahkan test sesuai kebutuhan).
 - `composer run dev`: menjalankan server PHP, queue listener, pail log, dan Vite secara paralel (lihat script di composer.json).
+- `npm run serve-all`: menjalankan `npm run dev` dan `php artisan serve` secara bersamaan melalui `concurrently`.
 
 ## Struktur Katalog (Singkat)
 ```text
