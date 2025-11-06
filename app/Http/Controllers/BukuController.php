@@ -9,10 +9,20 @@ use Illuminate\Support\Facades\Storage;
 
 class BukuController extends Controller
 {
+    // public function index()
+    // {
+    //     $bukus = Buku::with('kategori')->orderBy('id', 'desc')->paginate(10);
+    //     return view('admin.buku.index', compact('bukus'));
+    // }
+
     public function index()
     {
         $bukus = Buku::with('kategori')->orderBy('id', 'desc')->paginate(10);
-        return view('admin.buku.index', compact('bukus'));
+        if (auth()->user()->role == 'admin') {
+            return view('admin.buku.index', compact('bukus'));
+        } else {
+            return view('member.buku.index', compact('bukus'));
+        }
     }
 
     public function create()
